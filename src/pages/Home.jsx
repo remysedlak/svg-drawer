@@ -13,6 +13,17 @@ const Home = () => {
   const [cursor, setCursor] = useState("crosshair");
   const [draggingShapeIndex, setDraggingShapeIndex] = useState(null);
 
+  const copySVGToClipboard = () => {
+    const svgElement = document.getElementById("canvas");
+    if (!svgElement) return;
+  
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+  
+    navigator.clipboard.writeText(svgData)
+      .then(() => alert("✅ SVG code copied to clipboard!"))
+      .catch(err => console.error("Failed to copy SVG code:", err));
+  };
+
   const handleMouseDown = (e) => {
     const { x, y } = getMousePosition(e);
 
@@ -205,7 +216,7 @@ const Home = () => {
         </svg>
 
         {/* Tool Selector */}
-        <div className="border-2 border-gray-600 rounded-xl w-32 p-2 mx-2">
+        <div className="rounded-xl w-32 p-2 mx-2">
           <h3 className="text-center font-semibold mb-2">Tools</h3>
           <div className="flex flex-col gap-2">
             {["rectangle", "circle", "triangle", "square"].map((tool) => (
@@ -274,6 +285,8 @@ const Home = () => {
               <button className="px-2 w-full border rounded bg-blue-400 hover:bg-red-600">
                 Preview
               </button>
+              <button className="px-2 w-full border rounded bg-blue-400 hover:bg-red-600" 
+              onClick={copySVGToClipboard} > Code </button>
             </div>
           </div>
         </div>
