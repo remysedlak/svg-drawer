@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import clicker from '../assets/cursor.svg';
-import grabber from '../assets/grab.svg';
-import bucket from '../assets/bucket.svg';
+import ColorPallete from '../components/ColorPallete';
 
 const Home = () => {
   const [shapes, setShapes] = useState([]);
@@ -184,20 +182,8 @@ const Home = () => {
       <h2 className="text-center text-xl font-semibold text-gray-800">Created by Remy Sedlak</h2>
 
       <div className="mt-8 flex flex-row w-full h-[460px] rounded-lg shadow-lg border-2 border-black bg-gray-100">
-        {/* Color Palette */}
-        <div className="rounded-xl w-32 p-2 grid grid-cols-2 gap-2 items-center">
-            {["red", "blue", "green", "yellow", "purple", "orange", "pink", "black", "white"].map((color) => (
-              <button
-                key={color}
-                onClick={() => setCurrentColor(color)}
-                className="w-8 h-8 border-1 rounded-full p-2"
-                style={{ backgroundColor: color }}
-              />
-            ))}
-            <img src={clicker} alt="Cursor Icon" className="w-8 h-8" onClick={() => setCursor("crosshair")} />
-            <img src={grabber} alt="Grab Icon" className="w-8 h-8" onClick={() => setCursor("grab")} />
-            <img src={bucket} alt="Bucket Icon" className="w-8 h-8" onClick={() => setCursor("bucket")} />
-        </div>
+        
+        <ColorPallete setCursor={setCursor} setCurrentColor={setCurrentColor} />
 
         {/* Drawing Canvas */}
         <svg
@@ -216,14 +202,14 @@ const Home = () => {
         </svg>
 
         {/* Tool Selector */}
-        <div className="rounded-xl w-32 p-2 mx-2">
+        <div className="rounded-xl w-32 mx-2">
           <h3 className="text-center font-semibold mb-2">Tools</h3>
           <div className="flex flex-col gap-2">
             {["rectangle", "circle", "triangle", "square"].map((tool) => (
               <button
                 key={tool}
                 onClick={() => setCurrentTool(tool)}
-                className={`p-2 border rounded ${
+                className={`px-2 border rounded ${
                   currentTool === tool ? "bg-green-400" : "hover:bg-yellow-400"
                 }`}
               >
@@ -232,7 +218,7 @@ const Home = () => {
             ))}
           </div>
           
-          <div className="mt-4 flex flex-col gap-2">
+          <div className="mt-4 flex flex-col">
           {(shapes.length > 0) ?
             <button
               onClick={() => {
